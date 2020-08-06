@@ -37,12 +37,15 @@ func MakePhaulServer(c Config) (*Server, error) {
 func (s *Server) StartIter() error {
 	fmt.Printf("S: start iter\n")
 	psi := rpc.CriuPageServerInfo{
-		Fd: proto.Int32(int32(s.cfg.Memfd)),
+		//Fd: proto.Int32(int32(s.cfg.Memfd)),
+		Address: proto.String("0.0.0.0"),
+		Port:    proto.Int32(int32(5678)),
 	}
 	opts := rpc.CriuOpts{
 		LogLevel: proto.Int32(4),
 		LogFile:  proto.String("ps.log"),
 		Ps:       &psi,
+	//	ShellJob: proto.Bool(true),
 	}
 
 	prevP := s.imgs.lastImagesDir()

@@ -51,11 +51,14 @@ func isLastIter(iter int, stats *stats.DumpStatsEntry, prevStats *stats.DumpStat
 	return false
 }
 
+
 // Migrate function
 func (pc *Client) Migrate() error {
 	criu := criu.MakeCriu()
 	psi := rpc.CriuPageServerInfo{
-		Fd: proto.Int32(int32(pc.cfg.Memfd)),
+		//Fd: proto.Int32(int32(pc.cfg.Memfd)),
+		Address: proto.String(pc.cfg.Addr),
+		Port:    proto.Int32(int32(pc.cfg.Port)),
 	}
 	opts := rpc.CriuOpts{
 		Pid:      proto.Int32(int32(pc.cfg.Pid)),
@@ -119,6 +122,7 @@ func (pc *Client) Migrate() error {
 	}
 
 	err = pc.remote.StartIter()
+
 	if err == nil {
 		prevP := imgs.lastImagesDir()
 		err = pc.local.DumpCopyRestore(criu, pc.cfg, prevP)

@@ -12,6 +12,8 @@ import (
 type Config struct {
 	Pid   int
 	Memfd int
+	Port  int32
+	Addr  string
 	Wdir  string
 }
 
