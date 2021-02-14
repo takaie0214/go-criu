@@ -65,6 +65,7 @@ func (pc *Client) Migrate() error {
 		LogLevel: proto.Int32(4),
 		LogFile:  proto.String("pre-dump.log"),
 		Ps:       &psi,
+		ShellJob:    proto.Bool(true),
 	}
 
 	err := criu.Prepare()
@@ -122,6 +123,7 @@ func (pc *Client) Migrate() error {
 	}
 
 	err = pc.remote.StartIter()
+
 
 	if err == nil {
 		prevP := imgs.lastImagesDir()
